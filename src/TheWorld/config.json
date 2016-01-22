@@ -1,5 +1,8 @@
 ﻿{
     "AppSettings": {
-        "SiteEmailAddress":  "me@aol.com"
+        "SiteEmailAddress": "me@aol.com"
+    },
+    "Data": {
+        "WorldContextConnection": "Server=(localdb)\\mssqllocaldb;Database=PluralSight.AspNet5.TheWorldDB;Trusted_Connection=True;"
     }
 }
