@@ -18,9 +18,9 @@ namespace TheWorld.Models
             _logger = logger;
         }
 
-        public void AddStop(string tripName, Stop newStop)
+        public void AddStop(string tripName, Stop newStop, string username)
         {
-            var theTrip = GetTripByName(tripName);
+            var theTrip = GetTripByName(tripName, username);
             newStop.Order = theTrip.Stops.Max(s => s.Order) + 1;
             theTrip.Stops.Add(newStop);
             _context.Stops.Add(newStop);
@@ -28,7 +28,6 @@ namespace TheWorld.Models
 
         public void AddTrip(Trip newTrip)
         {
-
             _context.Add(newTrip);
         }
 
@@ -49,10 +48,10 @@ namespace TheWorld.Models
         {
             try
             {
-            return _context.Trips
-                .Include(t => t.Stops)
-                .OrderBy(t => t.Name)
-                .ToList();
+                return _context.Trips
+                    .Include(t => t.Stops)
+                    .OrderBy(t => t.Name)
+                    .ToList();
             }
             catch (Exception ex)
             {
@@ -61,11 +60,29 @@ namespace TheWorld.Models
             }
         }
 
-        public Trip GetTripByName(string tripName)
+        public Trip GetTripByName(string tripName, string username)
         {
             return _context.Trips.Include(t => t.Stops)
-                                 .Where(t => t.Name == tripName)
+                                 .Where(t => t.Name == tripName && t.UserName == username)
                                  .FirstOrDefault();
+        }
+
+        public IEnumerable<Trip> GetUserTripsWithStops(string name)
+        {
+            try
+            {
+                return _context.Trips
+                    .Include(t => t.Stops)
+                    .OrderBy(t => t.Name)
+                    .Where(t => t.UserName == name)
+                    .ToList();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Could not get trips with stops from database", ex);
+                return null;
+            }
+
         }
 
         public bool SaveAll()

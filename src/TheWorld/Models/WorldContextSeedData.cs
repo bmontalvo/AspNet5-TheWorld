@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,14 +9,28 @@ namespace TheWorld.Models
     public class WorldContextSeedData
     {
         private WorldContext _context;
+        private UserManager<WorldUser> _userManager;
 
-        public WorldContextSeedData(WorldContext context)
+        public WorldContextSeedData(WorldContext context, UserManager<WorldUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
-        public void EnsureSeedData()
+        public async Task EnsureSeedData()
         {
+            if (await _userManager.FindByEmailAsync("sam.hastings@theworld.com") == null)
+            {
+                // Add the user.
+                var newUser = new WorldUser()
+                {
+                    UserName = "samhastings",
+                    Email = "sam.hastings@theworld.com"
+                };
+
+                await _userManager.CreateAsync(newUser, "P@ssw0rd!");
+            }
+
             if (!_context.Trips.Any())
             {
                 // Add new Data
@@ -23,7 +38,7 @@ namespace TheWorld.Models
                 {
                     Name = "US Trip",
                     Created = DateTime.UtcNow,
-                    UserName = "",
+                    UserName = "samhastings",
                     Stops = new List<Stop>()
                     {
                         new Stop() { Name = "Atlanta, GA", Arrival = new DateTime(2014, 6, 4), Order = 0, Latitude = 33.7550, Longitude = -84.3900 },
@@ -42,7 +57,7 @@ namespace TheWorld.Models
                 {
                     Name = "World Trip",
                     Created = DateTime.UtcNow,
-                    UserName = "",
+                    UserName = "samhastings",
                     Stops = new List<Stop>()
                     {
                         new Stop() { Name = "Fort Lauderdale, FL", Arrival = new DateTime(2015, 10, 31), Order = 0, Latitude = 26.1333, Longitude = -80.1500 },
