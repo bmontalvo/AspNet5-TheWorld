@@ -51,8 +51,8 @@ namespace TheWorld.Models
                         new Stop() { Name = "Barcelona, Spain", Arrival = new DateTime(2016, 11, 20), Order = 3, Latitude = 41.3833, Longitude = 2.1833 },
                         new Stop() { Name = "Lyon, France", Arrival = new DateTime(2016, 12, 20), Order = 4, Latitude = 45.7600, Longitude = 4.8400 },
                         new Stop() { Name = "Prague, Czech Republic", Arrival = new DateTime(2016, 12, 22), Order = 5, Latitude = 50.0833, Longitude = 14.4167 },
-                        new Stop() { Name = "New York, NY", Arrival = new DateTime(2016, 1, 5), Order = 1, Latitude = 40.7127, Longitude = -74.0059 },
-                        new Stop() { Name = "Fort Lauderdale, FL", Arrival = new DateTime(2016, 1, 7), Order = 0, Latitude = 26.1333, Longitude = -80.1500 },
+                        new Stop() { Name = "New York, NY", Arrival = new DateTime(2016, 1, 5), Order = 6, Latitude = 40.7127, Longitude = -74.0059 },
+                        new Stop() { Name = "Fort Lauderdale, FL", Arrival = new DateTime(2016, 1, 7), Order = 7, Latitude = 26.1333, Longitude = -80.1500 },
                     }
                 };
 
